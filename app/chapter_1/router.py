@@ -69,3 +69,4 @@ async def check_view(letter: str, word: str):
     result = alphabet.get(letter.upper())
     return result.lower() == word.lower()
 
+# 4
