@@ -78,7 +78,6 @@ async def check_view(letter: str, word: str):
 
 @router.get("/between/")
 async def between_view(from_letter: str, to_letter: str):
-
     letters = list(alphabet.keys())
 
     from_index = letters.index(from_letter)
@@ -87,8 +86,9 @@ async def between_view(from_letter: str, to_letter: str):
     if from_index >= to_index:
         return "-", 200
 
-    result = "".join(letters[from_index+1:to_index])
+    result = "".join(letters[from_index + 1:to_index])
     return result, 200
+
 
 # 5
 """Напишите вьюшку для запросов /get-some/<number> которая возвращает указанное количество букв или - если передан 0"""
@@ -96,7 +96,6 @@ async def between_view(from_letter: str, to_letter: str):
 
 @router.get("/get-some/{number}")
 async def get_some_view(number: int, response: Response):
-
     letters = "".join(list(alphabet.keys()))
     print(letters)
 
@@ -108,6 +107,7 @@ async def get_some_view(number: int, response: Response):
 
     return result
 
+
 # 6
 """Напишите вьюшку для запросов /letters/?limit=<limit>&offset=<offset>, которая возвращает указанное количество букв
  с указанной позиции. Если с таким отступом ничего нет или лимит нулевой – возвращает “-”."""
@@ -115,7 +115,6 @@ async def get_some_view(number: int, response: Response):
 
 @router.get("/letters/")
 async def letters_view(limit: int, offset: int):
-
     start = offset
     end = offset + limit
     letters = "abcdefghijklmnopqrstuvwxyz"
@@ -126,6 +125,7 @@ async def letters_view(limit: int, offset: int):
         return "-", 200
 
     return page_letters, 200
+
 
 # 7
 """Напишите вьюшку для запросов /letters/page/<page_number> которая выводила бы по пять элементов, причем, если страница
@@ -145,8 +145,50 @@ async def letters_view(page_number: Optional[int] = 1):
 
     return page_letters
 
+
 # 8
 """Напишите вьюшку для запросов /search/?s=<s> которая бы выводила слова, в которых содержится указанная подстрока. 
 Если ничего не нашлось – верните 404."""
+
+
+@router.get("/search/")
+async def search_view(s: str):
+    result = [v for k, v in alphabet.items() if s in v]
+    print(result)
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Not Found")
+
+    return {"result": result}
+
+
+# 9
+"""Напишите вьюшку для запросов /get/?len=<length> которая возвращает все слова указанной длины. 
+Если таких слов нет – напишите 404."""
+
+
+@router.get("/get/")
+async def get_view(length: int):
+    result = [w for w in alphabet.values() if len(w) == length]
+    if not result:
+        return {"detail": "Not Found"}, 404
+    return {"result": result}
+
+
+# 10
+"""Напишите вьюшку для запросов /letters с  аргументами"""
+
+
+@router.get("/letters")
+async def letters_view(limit: int = None, offset: int = None, sort: str = None):
+    if limit is None or offset is None or sort is None or sort not in ["asc", "desc"]:
+        raise HTTPException(status_code=400, detail="Bad Request")
+
+    res_str = alphabet[offset:offset+limit]
+
+    if sort == "asc":
+        return {"result": res_str}
+    else:
+        return {"result": res_str[::-1]}
 
 
