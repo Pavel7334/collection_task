@@ -1,4 +1,5 @@
-from fastapi import HTTPException, APIRouter
+from typing import Optional
+from fastapi import HTTPException, APIRouter, Response
 
 router = APIRouter(
     tags=["Задачт 1-10"],
@@ -59,14 +60,93 @@ async def find_view(letter: str):
 
     return {"result": result}
 
+
 # 3
 """Напишите вьюшку для запросов  /check/<letter>/<word> для проверки соответствия буквы ее расшифровке:"""
 
 
 @router.get("/check/{letter}/{word}")
 async def check_view(letter: str, word: str):
-
     result = alphabet.get(letter.upper())
     return result.lower() == word.lower()
 
+
 # 4
+"""Напишите вьюшку для запросов /between/?from=<letter>&to=<letter> , которая возвращает буквы в промежутке между 
+указанными или прочерк, если между указанными буквами ничего нет. """
+
+
+@router.get("/between/")
+async def between_view(from_letter: str, to_letter: str):
+
+    letters = list(alphabet.keys())
+
+    from_index = letters.index(from_letter)
+    to_index = letters.index(to_letter)
+
+    if from_index >= to_index:
+        return "-", 200
+
+    result = "".join(letters[from_index+1:to_index])
+    return result, 200
+
+# 5
+"""Напишите вьюшку для запросов /get-some/<number> которая возвращает указанное количество букв или - если передан 0"""
+
+
+@router.get("/get-some/{number}")
+async def get_some_view(number: int, response: Response):
+
+    letters = "".join(list(alphabet.keys()))
+    print(letters)
+
+    result = "".join(letters[:number])
+
+    if not number == 0:
+        response.status_code = 200
+        return "-"
+
+    return result
+
+# 6
+"""Напишите вьюшку для запросов /letters/?limit=<limit>&offset=<offset>, которая возвращает указанное количество букв
+ с указанной позиции. Если с таким отступом ничего нет или лимит нулевой – возвращает “-”."""
+
+
+@router.get("/letters/")
+async def letters_view(limit: int, offset: int):
+
+    start = offset
+    end = offset + limit
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    page_letters = letters[start:end]
+    print(page_letters)
+
+    if not page_letters:
+        return "-", 200
+
+    return page_letters, 200
+
+# 7
+"""Напишите вьюшку для запросов /letters/page/<page_number> которая выводила бы по пять элементов, причем, если страница
+ не указана, выводятся первые 5 элементов, если же для указанной страницы не хватает элементов, возвращается статус-код 
+ 404."""
+
+
+@router.get("/letters/page/{page_number}")
+async def letters_view(page_number: Optional[int] = 1):
+    start = (page_number - 1) * 5
+    end = start + 5
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    page_letters = letters[start:end]
+
+    if not page_letters:
+        raise HTTPException(status_code=404, detail="Not Found")
+
+    return page_letters
+
+# 8
+"""Напишите вьюшку для запросов /search/?s=<s> которая бы выводила слова, в которых содержится указанная подстрока. 
+Если ничего не нашлось – верните 404."""
+
+
