@@ -2,7 +2,8 @@ from typing import Optional
 from fastapi import HTTPException, APIRouter, Response
 
 router = APIRouter(
-    tags=["Задачт 1-10"],
+    tags=["Часть 1:"
+          " Задачи 1-10"],
 )
 
 alphabet = {
