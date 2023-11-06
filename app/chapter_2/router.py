@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 router = APIRouter(
     tags=["Часть 2:"
-          " Задачт 1-5"],
+          " Задачи 1-5"],
 )
 
 
@@ -70,4 +70,30 @@ async def get_flights_from(go_from: str) -> List[str]:
         raise HTTPException(status_code=404, detail="Такого рейса нет")
 
     return flights
+
+
+# 2
+"""Напишите вьюшку, которая возвращает все рейсы из первого аэропорта во второй. Оба"""
+
+
+@router.get('/flights/')
+async def get_flights(go_from: str, go_to: str) -> List[str]:
+    flights = [flight.number for flight in all_flights if flight.go_from == go_from and flight.go_to == go_to]
+
+    if not flights:
+        raise HTTPException(status_code=404, detail="Такоих рейсов нет")
+
+    return flights
+
+
+# 3
+"""Напишите вьюшку, которая возвращает все рейсы между двумя указанными аэропортами (в обе стороны)"""
+
+
+@router.get('/flights/between/{go_from}-{go_to}')
+async def get_flights_between(go_from: str, go_to: str) -> List[str]:
+    flights = [flight.number for flight in all_flights if flight.go_from == go_from and flight.go_to == go_to
+               or flight.go_from == go_to and flight.go_to == go_from]
+    return flights
+
 
