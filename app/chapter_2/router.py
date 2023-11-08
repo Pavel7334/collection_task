@@ -97,3 +97,11 @@ async def get_flights_between(go_from: str, go_to: str) -> List[str]:
     return flights
 
 
+# 4
+"""Напишите вьюшку, которая обрабатывает запросы типа /from/XXX и  /from/XXX/to/XXX"""
+
+
+@router.get('/from/XXX/to/XXX')
+async def get_flights_from_to(go_from: str, go_to: str) -> List[str]:
+    flights = [flight.number for flight in all_flights if flight.go_from == go_from and flight.go_to == go_to]
+    return flights
