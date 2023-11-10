@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter(
     tags=["Часть 3:"
@@ -53,18 +53,18 @@ async def add_enrollments(new_enrollments: dict) -> list:
 
 
 # 4
-"""У вас есть переменная, где хранится список пользователей. У каждого пользователя есть уникальный идентификатор. 
+"""У вас есть переменная, где хранится список пользователей. У каждого пользователя есть уникальный идентификатор.
 При отправке POST запроса добавьте пользователя в список с очередным pk. Верните словарь с пользователем. """
 
-users = [
+users_2 = [
     {"pk": 1, "name": "alex", "phone": "+123456789"},
     {"pk": 2, "name": "mary", "phone": "+987654321"}
 ]
 
 
-@router.post("/users")
-async def add_user(new_user: dict) -> list:
-    users.append(new_user)
+@router.post("/new_users")
+async def user(new_user: dict) -> list:
+    users_2.append(new_user)
     return users
 
 
@@ -73,13 +73,18 @@ async def add_user(new_user: dict) -> list:
 - [ ]  телефон (phone) указан. Если все ок – добавьте пользователя в список и верните в ответ добавленный словарь.
 Если нет – верните список ошибок в формате “name missed”, “phone missed”"""
 
-new_users = [
+users = [
     {"name": "alex", "phone": "+123456789"},
     {"name": "mary", "phone": "+987654321"}
 ]
 
 
 @router.post("/users")
-async def add_user(new_user: dict) -> list:
+async def add_user(new_user: dict):
+    if "name" not in new_user.keys():
+        raise HTTPException(status_code=400, detail="name missed")
+    elif "phone" not in new_user.keys():
+        raise HTTPException(status_code=400, detail="phone missed")
     users.append(new_user)
-    return users
+
+    return new_user
