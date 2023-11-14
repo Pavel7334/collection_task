@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 
 router = APIRouter(
     tags=["Часть 3:"
@@ -85,6 +86,26 @@ async def add_user(new_user: dict):
         raise HTTPException(status_code=400, detail="name missed")
     elif "phone" not in new_user.keys():
         raise HTTPException(status_code=400, detail="phone missed")
+    elif "" in new_user.keys():
+        raise HTTPException(status_code=400, detail="Нет данных")
     users.append(new_user)
 
     return new_user
+
+
+# 6
+"""У вас есть переменная, где хранится список пользователей. Получите список из тела POST запроса 
+и добавьте их в список. Количество пользователей в запросе может быть любым."""
+
+
+users_3 = [
+    {"name": "alex", "phone": "+123456789"},
+    {"name": "mary", "phone": "+987654321"}
+]
+
+
+@router.post("/users_3")
+async def add_user(new_user: tuple):
+    users_3.extend(new_user)
+    return users_3
+
