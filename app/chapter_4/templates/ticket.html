@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ticket</title>
+</head>
+<body>
+<div>
+  {% block content %}
+
+  <h2>Ticket</h2>
+
+  <p>Name: {{ ticket.passenger.name }}</p>
+  <p>Seat: {{ ticket.seat }}</p>
+  <p>Class: {{ ticket.class }}</p>
+
+  <p>Aircraft: {{ ticket.aircraft.model }}</p>
+
+  <p>Departure_time: {{ ticket.flight.departure_time }}</p>
+  <p>Arrival_time: {{ ticket.flight.arrival_time }}</p>
+  {% endblock %}
+</div>
+</body>
+</html>
