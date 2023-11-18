@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  {% block content %}
+
+  <h1>Flight {{ not_delayed.flight_number }}</h1>
+
+  {% if delayed.delayed %}
+  <p>Flight Delayed</p>
+  <p>New departure time: {{ delayed.new_departure_time }}</p>
+  {% else %}
+  <p>Aircraft: {{ not_delayed.aircraft }}</p>
+  <p>Departure time: {{ not_delayed.departure_time }} </p>
+  {% endif %}
+  {% endblock %}
+</div>
+</body>
+</html>

@@ -21,7 +21,7 @@ arrival_time = '18:45'
 departure_airport = 'SVO'
 arrival_airport = 'JFK'
 
-templates = Jinja2Templates(directory='app/chapter_4/templates')
+templates = Jinja2Templates(directory='app/part_1/chapter_4/templates')
 
 
 @router.get('/items', response_class=HTMLResponse)
@@ -46,8 +46,6 @@ airport = {
     'city': 'Лондон'
 }
 
-templates_1 = Jinja2Templates(directory='app/chapter_4/templates')
-
 
 @router.get("/airport", response_class=HTMLResponse)
 async def read_item(request: Request):
@@ -67,8 +65,6 @@ aircraft_1 = {
         'country': 'ОАЭ'
     }
 }
-
-templates_2 = Jinja2Templates(directory='app/chapter_4/templates')
 
 
 @router.get('/aircraft', response_class=HTMLResponse)
@@ -94,8 +90,6 @@ ticket = {
     }
 }
 
-templates_3 = Jinja2Templates(directory='app/chapter_4/templates')
-
 
 @router.get('/ticket', response_class=HTMLResponse)
 async def read_item(request: Request):
@@ -119,8 +113,6 @@ weather = {
     'temp': 15
 }
 
-templates_4 = Jinja2Templates(directory='app/chapter_4/templates')
-
 
 @router.get('/weather_departure', response_class=HTMLResponse)
 async def read_item(request: Request):
@@ -129,3 +121,41 @@ async def read_item(request: Request):
         'weather': weather,
         'flight': flight
     })
+
+
+# 6
+"""Напишите шаблон, который выведет информацию о рейсе и покажет сообщение с новым временем, если рейс был задержан."""
+
+delayed = {
+    "flight_number": "SU123",
+    "aircraft": "Airbus A320",
+
+    "departure_time": "14:30",
+    "departure_airport": "SVO",
+
+    "arrival_time": "18:45",
+    "arrival_airport": "MSQ",
+
+    "delayed": False,
+    "new_departure_time": "15:10",
+    "new_arrival_time": "19:20",
+}
+not_delayed = {
+    "flight_number": "SU123",
+    "aircraft": "Airbus A320",
+
+    "departure_time": "14:30",
+    "departure_airport": "SVO",
+
+    "arrival_time": "18:45",
+    "arrival_airport": "MSQ",
+}
+
+
+@router.get('/info_flight', response_class=HTMLResponse)
+async def read_item(request: Request):
+    return templates.TemplateResponse('info_flight.html', {
+        'request': request,
+        'delayed': delayed,
+        'not_delayed': not_delayed})
+
