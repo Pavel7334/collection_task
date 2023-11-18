@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Описание рейса</title>
+</head>
+<body>
+<div>
+  {% block content %}
+
+  <h2>Данные о рейсе</h2>
+
+  <p>Аэропорт вылета: {{ departure_airport }}</p>
+  <p>Аэропорт прибытия: {{ arrival_airport }}</p>
+
+  <p>Время вылета {{ departure_time }}</p>
+  <p>Время прибылия {{ arrival_time }}</p>
+  {% endblock %}
+</div>
+</body>
+</html>
