@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  {% block content %}
+
+  <h2>Take Off Manifest ... </h2>
+
+  <p>Aircraft: {{ flight.aircraft.model }}</p>
+
+  <p>Departure_time: {{ flight.shedule.departure_time }}</p>
+  <p>Arrival_time: {{ flight.shedule.arrival_time }}</p>
+
+  <p>Temperature: {{ weather.temp }}</p>
+  <p>Wind Speed: {{ weather.wind_speed }}</p>
+  {% endblock %}
+</div>
+</body>
+</html>

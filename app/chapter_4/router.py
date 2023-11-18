@@ -118,3 +118,14 @@ weather = {
     'visibility': 1400,
     'temp': 15
 }
+
+templates_4 = Jinja2Templates(directory='app/chapter_4/templates')
+
+
+@router.get('/weather_departure', response_class=HTMLResponse)
+async def read_item(request: Request):
+    return templates.TemplateResponse('weather_departure.html', {
+        'request': request,
+        'weather': weather,
+        'flight': flight
+    })
