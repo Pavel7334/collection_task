@@ -23,13 +23,9 @@ def view_random():
 
 
 @router.get('/api/1/random')
-def random_num(num1=None, num2=None):
-    if num1 is None and num2 is None:
-        value = random.randint(1, 100)
-        return {"number": value}
-    else:
-        value = random.randint(int(num1), int(num2))
-        return {"number": value}
+def random_num(num1: int = 1, num2: int = 100):
+    value = random.randint(num1, num2)
+    return {"number": value}
 
 
 # 3
@@ -41,3 +37,32 @@ grocery = ["milk", "sugar", "cookies", "corn-flakes", "nutella"]
 @router.get('/api/1/grocery')
 def random_grocery():
     return grocery
+
+
+# 4
+"""У вас есть список расходов. Выведите информацию о количестве, сумме, 
+максимуме и среднем в ответ на запрос /api/1/grocery-stats"""
+
+grocery_stats = {
+    "milk": 150,
+    "sugar": 90,
+    "cookies": 200,
+    "corn-flakes": 140,
+    "nutella": 250,
+}
+
+
+@router.get('/api/1/grocery-stats')
+def info_expenses():
+    count_values = len(grocery_stats.values())
+    total = sum(grocery_stats.values())
+    maximum = max(grocery_stats.values())
+    minimum = min(grocery_stats.values())
+    average = sum(grocery_stats.values()) / len(grocery_stats)
+    return {
+        "count": count_values,
+        "total": total,
+        "max": maximum,
+        "min": minimum,
+        "avg": average
+    }
