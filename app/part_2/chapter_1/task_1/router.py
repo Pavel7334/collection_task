@@ -66,3 +66,21 @@ def info_expenses():
         "min": minimum,
         "avg": average
     }
+
+
+# 5
+"""У вас есть список расходов. Верните выборку по категориям в ответ на запрос `GET /api/1/expanses/<product>`"""
+
+list_category = [
+  {"name": "milk", "unit_price": 50, "amount": 3, "total": 150, "cat": "mil"},
+  {"name": "sugar", "unit_price": 30, "amount": 3, "total": 90 },
+  {"name": "cookies", "unit_price": 50, "amount": 4, "total": 200 },
+  {"name": "corn-flakes", "unit_price": 70, "amount": 2, "total": 140 },
+  {"name": "nutella", "unit_price": 125, "amount": 1, "total": 250 },
+]
+
+
+@router.get('/api/1/expanses/<product>')
+def selection_category(category):
+    return [item for item in list_category if item["name"] == category]
+
