@@ -4,7 +4,7 @@ from fastapi import APIRouter
 router = APIRouter(
     prefix="/pages",
     tags=["Часть 5:"
-          " Задачи 1-6"],
+          " Задачи 1-5"],
 )
 
 # 1
@@ -83,4 +83,5 @@ list_category = [
 @router.get('/api/1/expanses/<product>')
 def selection_category(category):
     return [item for item in list_category if item["name"] == category]
+
 
