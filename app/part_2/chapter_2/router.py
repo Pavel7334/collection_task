@@ -46,4 +46,18 @@ def get_product(product_cat):
     return list_cat or data
 
 
+# 8
+"""Верните  все продукты с килокалориями в выбранном диапазоне. Если указано только от – фильтруйте от 
+него до бесконечности. Если указано только до – фильтруйте от 0 и до него. Если диапазон не указан - верните все."""
 
+
+@router.get('/api/2/products/')
+def get_kcal(kcal_from: int = 0, kcal_to: int = 10000):
+    return [row for row in data if row[-1] > kcal_from and row[-1] < kcal_to]
+
+
+    # list_kcal_from = []
+    # for row in data:
+    #     if row[3] in range(kcal_from, kcal_to):
+    #         list_kcal_from.append(row)
+    # return list_kcal_from
