@@ -61,3 +61,15 @@ def get_kcal(kcal_from: int = 0, kcal_to: int = 10000):
     #     if row[3] in range(kcal_from, kcal_to):
     #         list_kcal_from.append(row)
     # return list_kcal_from
+
+
+# 9
+"""Верните все категории из списка. GET /api/1/categories"""
+
+
+@router.get('/api/1/categories')
+def get_category():
+    new_lst = []
+    for row in data:
+        new_lst.append(row[2])
+    return set(new_lst)
