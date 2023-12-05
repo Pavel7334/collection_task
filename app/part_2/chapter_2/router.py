@@ -71,5 +71,18 @@ def get_kcal(kcal_from: int = 0, kcal_to: int = 10000):
 def get_category():
     new_lst = []
     for row in data:
-        new_lst.append(row[2])
-    return set(new_lst)
+        if row[2] not in new_lst:
+            new_lst.append(row[2])
+    return new_lst
+
+
+# 10
+"""Верните по запросу GET /api/1/get_products/1_2_3 список продуктов с соответствующими ключами. 
+Если какого-то ключа нет – пропускаем"""
+
+
+# @router.get('/api/1/get_products/')
+# def gey_products():
+#
+
+
