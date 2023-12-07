@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, HTTPException, Header, Depends, Request
 
 router = APIRouter(
     prefix="/pages",
@@ -14,9 +14,9 @@ router = APIRouter(
 Выведите значение заголовка в теле ответа"""
 
 
-# @router.get("/")
-# def get_my_header(my_header: str):
-#     return my_header
+@router.get("/my_header/")
+def get_my_header(my_header: str):
+    return my_header
 
 
 # 2
@@ -29,11 +29,34 @@ router = APIRouter(
 Если заголовок не отправлен или не содержит `@`, верните ошибку `400`."""
 
 
-@router.get("/")
+@router.get("/from_header/")
 async def read_from_header(from_header: str = Header(None)):
     if not from_header or '@' not in from_header:
         raise HTTPException(status_code=400, detail="Ошибка сервера")
 
     mail_name, mail_domain = from_header.split('@')
     return {"mail_name": mail_name, "mail_domain": mail_domain}
+
+
+# 3
+"""Напишите приложение, которое обрабатывает запросы.
+
+В HTTP запросе передаются куки.
+
+Выведите куки, которые были переданы в виде словаря."""
+
+
+async def get_cookie(request: Request):
+    return request.cookies
+
+
+@router.get("/cookies/")
+async def get_cookies(cookies: dict = Depends(get_cookie)):
+    return cookies
+
+
+
+
+
+
 
