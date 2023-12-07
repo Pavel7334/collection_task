@@ -55,6 +55,39 @@ async def get_cookies(cookies: dict = Depends(get_cookie)):
     return cookies
 
 
+# 4
+"""Напишите приложение, которое обрабатывает запросы. В HTTP запросе передаются куки с идентификатором пользователя в формате 
+
+`Cookie: user_pk=3`
+
+У вас есть словарь с информацией о пользователях."""
+
+
+users_dict = {
+  1: "Alex",
+  2: "Mary",
+  3: "Danny",
+  4: "Anna",
+  5: "Hanna"
+}
+
+
+async def get_user_pk(request: Request):
+    user_pk = request.cookies.get('user_pk')
+    print(request.cookies)
+    if user_pk is None:
+        raise HTTPException(status_code=400, detail="User not found")
+    try:
+        return int(user_pk)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="User not found")
+
+
+@router.get("/user_info/")
+async def get_user_info(request: Request, user_pk: int = Depends(get_user_pk)):
+    user_name = users_dict[user_pk]
+    return {'user_pk': user_pk, 'user_name': user_name}
+
 
 
 
