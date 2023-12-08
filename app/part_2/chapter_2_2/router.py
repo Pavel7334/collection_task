@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Header, Depends, Request
 
 router = APIRouter(
     prefix="/pages",
-    tags=["Часть 6:"
+    tags=["Часть 7:"
           " Задачи 1-5"],
 )
 
