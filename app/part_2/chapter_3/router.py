@@ -1,3 +1,7 @@
+import time
+from datetime import datetime
+from random import randint
+
 from fastapi import APIRouter, HTTPException, Header, Depends, Request, Response
 
 router = APIRouter(
@@ -50,10 +54,23 @@ request_number = {
 
 
 @router.get('/add_header')
-async def add_header():
+def add_header():
     response = {}
     headers = {'Request-Number': request_number['request_num']}
     request_number['request_num'] += 1
     return response, headers
 
 
+# 4
+"""Напишите вьюшку, которая при каждом запросе сперва создает новую переменную со значением datetime.now(), 
+затем ждет случайное количество секунд от 0 до 3, затем считает количество прошедших секунд и возвращает его в заголовке
+ Rendering-Time в формате числа с плавающей точкой."""
+
+
+@router.get('/date_obj')
+def date_second():
+    date_obj = datetime.now()
+    time.sleep(randint(0, 3))
+    response = {}
+    headers = {'Rendering-Time': datetime.now() - date_obj}
+    return response, headers
