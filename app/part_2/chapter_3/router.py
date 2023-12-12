@@ -28,7 +28,6 @@ def index(response: Response):
 Напишите вьюшку, которая при запросе `GET /` возвращала бы заголовок `Server-Environment`  
 с записанным  в переменной  `server_environment` значением."""
 
-
 server_environment = 'development'
 
 
@@ -46,7 +45,6 @@ async def index():
 
 Напишите вьюшку, которая при каждом новом запросе увеличивала бы значение на  `request_number` на 1. 
 В ответ пользователю отправляйте заголовок `Request-Number` с номером текущего запроса."""
-
 
 request_number = {
     'request_num': 0
@@ -68,9 +66,19 @@ def add_header():
 
 
 @router.get('/date_obj')
-def date_second():
+def date_second(response: Response):
     date_obj = datetime.now()
     time.sleep(randint(0, 3))
-    response = {}
-    headers = {'Rendering-Time': datetime.now() - date_obj}
-    return response, headers
+    headers = {'Rendering-Time': round((datetime.now() - date_obj).total_seconds(), 2)}
+    print(headers)
+    return response.headers
+
+
+# 5
+"""Создайте в приложении глобальную переменную cache_lifetime = 60 означающую время жизни кэша в секундах. 
+Напишите вьюшку, которая при запросе GET / отправляет Cache-Control: max_age=60 или другое число, 
+записанное  cache_lifetime"""
+
+cache_lifetime = 60
+
+
