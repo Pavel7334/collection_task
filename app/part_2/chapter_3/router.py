@@ -35,3 +35,25 @@ async def index():
     return response, headers
 
 
+# 3
+"""Напишите приложение, которое обрабатывает запросы и отдает заголовки.
+
+Создайте в приложении глобальную переменную `request_number = 0`
+
+Напишите вьюшку, которая при каждом новом запросе увеличивала бы значение на  `request_number` на 1. 
+В ответ пользователю отправляйте заголовок `Request-Number` с номером текущего запроса."""
+
+
+request_number = {
+    'request_num': 0
+}
+
+
+@router.get('/add_header')
+async def add_header():
+    response = {}
+    headers = {'Request-Number': request_number['request_num']}
+    request_number['request_num'] += 1
+    return response, headers
+
+
