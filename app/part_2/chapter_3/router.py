@@ -84,6 +84,5 @@ cache_lifetime = 60
 
 @router.get('/cache_control')
 def cache_control(response: Response):
-    response.headers['Cache-Control'] = str(cache_lifetime)
+    response.headers['Cache-Control'] = f'max_age = {cache_lifetime}'
     return {}
-
