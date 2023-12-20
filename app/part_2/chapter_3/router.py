@@ -69,8 +69,8 @@ def add_header():
 def date_second(response: Response):
     date_obj = datetime.now()
     time.sleep(randint(0, 3))
-    headers = {'Rendering-Time': round((datetime.now() - date_obj).total_seconds(), 2)}
-    print(headers)
+    final_time = round((datetime.now() - date_obj).total_seconds(), 2)
+    response.headers['Rendering-Time'] = str(final_time)
     return response.headers
 
 
