@@ -71,7 +71,7 @@ def date_second(response: Response):
     time.sleep(randint(0, 3))
     final_time = round((datetime.now() - date_obj).total_seconds(), 2)
     response.headers['Rendering-Time'] = str(final_time)
-    return response.headers
+    return {}
 
 
 # 5
@@ -81,4 +81,9 @@ def date_second(response: Response):
 
 cache_lifetime = 60
 
+
+@router.get('/cache_control')
+def cache_control(response: Response):
+    response.headers['Cache-Control'] = str(cache_lifetime)
+    return {}
 
