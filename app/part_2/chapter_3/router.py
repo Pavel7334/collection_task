@@ -1,6 +1,8 @@
+import random
 import time
 from datetime import datetime
 from random import randint
+
 
 from fastapi import APIRouter, HTTPException, Header, Depends, Request, Response
 
@@ -86,3 +88,25 @@ cache_lifetime = 60
 def cache_control(response: Response):
     response.headers['Cache-Control'] = f'max_age = {cache_lifetime}'
     return {}
+
+
+# 6
+"""Напишите вьюшку, которая обрабатывала бы запрос GET /  создавала бы каждый раз случайный реферальный идентификатор 
+referal_pk из 10 чисел и устанавливала бы куки с помощью заголовков."""
+
+
+def random_with_n_digits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return randint(range_start, range_end)
+
+
+@router.get('/referal_pk')
+def referal_pk(response: Response):
+    response.headers['Sem-Cook'] = f'referal_pk = {random_with_n_digits(10)}'
+    return {}
+
+
+# Set-Cookie: referal_pk=1234512345
+
+
