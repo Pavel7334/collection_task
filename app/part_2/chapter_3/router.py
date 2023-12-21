@@ -3,7 +3,6 @@ import time
 from datetime import datetime
 from random import randint
 
-
 from fastapi import APIRouter, HTTPException, Header, Depends, Request, Response
 
 router = APIRouter(
@@ -96,8 +95,8 @@ referal_pk из 10 чисел и устанавливала бы куки с п�
 
 
 def random_with_n_digits(n):
-    range_start = 10**(n-1)
-    range_end = (10**n)-1
+    range_start = 10 ** (n - 1)
+    range_end = (10 ** n) - 1
     return randint(range_start, range_end)
 
 
@@ -107,6 +106,33 @@ def referal_pk(response: Response):
     return {}
 
 
-# Set-Cookie: referal_pk=1234512345
+# 7
+"""В POST запросе передаются логин и пароль
+
+У вас есть словарь с информацией о пользователя, где есть почта и пароль.
+Обработайте запрос и верните статус код 
+
+`200`, если доступ разрешен
+
+`403`, если доступ запрещен
+
+Если доступ **разрешен**, добавьте в куки `user_pk`"""
+
+dictionary = [
+    {"pk": 1, "email": "alex@mymail.com", "password": "12345"},
+    {"pk": 2, "email": "mary@mymail.com", "password": "qwerty9"},
+    {"pk": 3, "email": "hanna@mymail.com", "password": "hanna777"}
+]
+
+
+@router.post('/info_user')
+def info_user(response: Response, pk: int, email: str, password: str):
+    for el in dictionary:
+        if pk and email and password in el.values():
+            response.headers['Sem-Cook'] = f'referal_pk = {pk}'
+            return '200'
+        else:
+            return '403'
+
 
 
