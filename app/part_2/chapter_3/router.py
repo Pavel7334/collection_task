@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 from random import randint
 
-from fastapi import APIRouter, HTTPException, Header, Depends, Request, Response
+from fastapi import APIRouter, HTTPException, status, Header, Depends, Request, Response
 
 router = APIRouter(
     prefix="/pages",
@@ -130,9 +130,14 @@ def info_user(response: Response, pk: int, email: str, password: str):
     for el in dictionary:
         if pk and email and password in el.values():
             response.headers['Sem-Cook'] = f'referal_pk = {pk}'
-            return '200'
+            return status.HTTP_200_OK
         else:
-            return '403'
+            return status.HTTP_403_FORBIDDEN
+
+
+# # 8
+# @router.post('/create_files')
+# def create_files()
 
 
 
