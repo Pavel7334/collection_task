@@ -35,3 +35,23 @@ async def get_location(pk: int):
     raise HTTPException(status_code=404, detail="Item not found")
 
 
+# 2
+"""Напишите приложение, которое обрабатывает запросы `GET` запросы  `/location/<pk>`
+
+Если по указанному номеру есть город и его статус – public, сервер возвращает название города в формате JSON, 
+
+например `{”location”: “Rome”}` и код `200`
+
+Если город есть, но его статус hidden или removed, сервер возвращает сообщение `{’error’: “no access”}` и код `403`
+
+Если по указанному номеру города нет,  сервер возвращает сообщение `{’error’: “not found”}` и код `404`"""
+
+
+@router.get("/location_pk/{pk}")
+async def get_location_pk(pk: int):
+    for city in cities:
+        if city['pk'] == pk:
+            if 'public' in city.values():
+                return {"location": list(city)[1]}
+            raise HTTPException(status_code=403, detail="Forbidden")
+    raise HTTPException(status_code=404, detail="Item not found")
