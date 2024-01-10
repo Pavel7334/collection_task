@@ -135,9 +135,4 @@ def info_user(response: Response, pk: int, email: str, password: str):
             return status.HTTP_403_FORBIDDEN
 
 
-# # 8
-# @router.post('/create_files')
-# def create_files()
-
-
 

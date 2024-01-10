@@ -9,6 +9,7 @@ from app.part_2.chapter_1.router import router as router_chapter_5
 from app.part_2.chapter_2.router import router as router_chapter_6
 from app.part_2.chapter_2_2.router import router as router_chapter_7
 from app.part_2.chapter_3.router import router as router_chapter_8
+from app.part_2.chapter_4.router import router as router_chapter_9
 
 app = FastAPI(
     title="Сборник задач"
@@ -23,4 +24,5 @@ app.include_router(router_chapter_5)
 app.include_router(router_chapter_6)
 app.include_router(router_chapter_7)
 app.include_router(router_chapter_8)
+app.include_router(router_chapter_9)
 
